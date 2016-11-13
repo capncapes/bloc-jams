@@ -28,6 +28,22 @@ var albumPicasso = {
      ]
  };
 
+var albumFury = {
+    title: 'The Avengers',
+    artist: 'Nick Fury',
+    label: 'Marvel',
+    year: '1963',
+    albumArtUrl: 'assets/images/album_covers/22.jpg',
+    songs: [
+        { title: 'Captain America', duration: '3:44' },
+        { title: 'Iron Man', duration: '3:29' },
+        { title: 'Black Widow', duration: '3:08' },
+        { title: 'The Hulk', duration: '7:01' },
+        { title: 'Thor', duration: '5:12' },
+        { title: 'Hawkeye', duration: '2:53' }
+    ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -40,12 +56,13 @@ var createSongRow = function(songNumber, songName, songLength) {
      return template;
  };
 
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
 var setCurrentAlbum = function(album) {
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
@@ -59,6 +76,16 @@ var setCurrentAlbum = function(album) {
      }
  };
  
- window.onload = function() {
-     setCurrentAlbum(albumPicasso);
- };
+window.onload = function() {
+    setCurrentAlbum(albumPicasso);
+    
+    var albums = [albumPicasso, albumMarconi, albumFury];
+    var index = 1;
+    albumImage.addEventListener("click", function(event) {
+        setCurrentAlbum(albums[index]);
+        index++;
+        if (index == albums.length) {
+            index = 0;
+        }
+    });
+};
